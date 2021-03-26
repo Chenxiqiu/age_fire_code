@@ -1,3 +1,4 @@
+,
 import numpy as np
 import matplotlib.pyplot as plt 
 from matplotlib import rcParams, cycler
@@ -8,6 +9,10 @@ import glob2
 import pandas as pd
 import clean.clean_03 as southtrac
 from matplotlib import gridspec
+from datetime import datetime
+import winsound
+duration = 1000  # milliseconds
+freq = 440  # Hz
 #from varname import nameof
 
 import plotly.io as pio
@@ -60,7 +65,7 @@ for i in range(vmin, vmax, res):
     #ins_data.loc[:, target.casefold()] = pd.Interval(i, i + res), i + res/2
     
     frame.append(ins_data)
-    print(f'{target}: ({i}, {i+res}]')
+    print(f'@{datetime.now().strftime("%H:%M:%S")}   {target}: ({i}, {i+res}]')
 ins_data = pd.concat(frame) 
 
 # southtrac = southtrac.read(local=1)
@@ -109,5 +114,5 @@ cbar=plt.colorbar(main, cax=ax3, orientation='horizontal')
 cbar.set_label(f'% of count relative to the highest bin given {target}') 
 
 plt.show()
-
+winsound.Beep(freq, duration)
 
