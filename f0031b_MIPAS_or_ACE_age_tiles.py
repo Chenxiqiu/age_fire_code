@@ -18,12 +18,6 @@ import plotly.io as pio
 import plotly.express as px
 pio.renderers.default='browser'
 
-#constants
-VMIN = 0 #the lowest possible value for age variables
-VMAX = 100 #the highest possible value for age variables except mean age or medium age
-VMAX_AGE = 80 #the lowest possible value for mean age or medium age
-VRES = 5 #the size of the bins for age variables
-
 def group(df, groupby_v):    
     df.loc[:, species] = pd.cut(df[species], mrrange)
     df.reset_index(inplace=True)
@@ -48,8 +42,11 @@ if species not in ['OCS', 'N2O']:
   raise Exception("species not recognized!")
 
 vmin, vmax, res = c.VMIN, c.VMAX_AGE if target== 'AGE' else c.VMAX, c.VRES
-mrmin, mrmax, mrres = c.OCSMIN_MIPAS if ins_name == 'MIPAS' else c.OCSMIN_ACE, c.OCSMAX, c.OCSRES
-mrrange = np.arange(mrmin, mrmax+mrres, mrres)
+if species == 'OCS':
+    mrrange = c.OCSRANGE_MIPAS if ins_name == 'MIPAS' else c.OCSRANGE_ACE
+if species == 'N2O':
+    mrrange = c.N2ORANGE_MIPAS if ins_name == 'MIPAS' else c.N2ORANGE_ACE
+
 dircInput1 = 'C:/Users/Chenxi/OneDrive/phd/age_and_fire/data/04_final/09_ENVISAT_MIPAS_with_AGEparams_final/' \
 if ins_name == 'MIPAS' else 'C:/Users/Chenxi/OneDrive/phd/age_and_fire/data/04_final/07_ACE_FTS_with_AGEparams_final/'
 
