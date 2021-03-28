@@ -13,6 +13,7 @@ from matplotlib import gridspec
 import plotly.io as pio
 import plotly.express as px
 pio.renderers.default='browser'
+import constants as c
 
 dircInput1 = 'C:/Users/Chenxi/OneDrive/phd/age_and_fire/data/03_cleaned/09_ENVISAT_MIPAS_with_AGEparams_cleaned/'
 dircInput2 = 'C:/Users/Chenxi/OneDrive/phd/age_and_fire/data/04_final/09_ENVISAT_MIPAS_with_AGEparams_final/'
@@ -58,8 +59,7 @@ for v in ['AGE', 'MF_24', 'MF_03', 'MF_06', 'MF_12', 'MF_48']:
     df = pd.concat(frame)            
     df.set_index(v, inplace=True)   
     df.sort_index(inplace=True) 
-    vmin, vmax, res = 0, 80 if v== 'AGE' else 100, 5
-    vrange = np.arange(vmin, vmax+res, res)
+    vrange = c.VRANGE_AGE if v== 'AGE' else c.VRANGE
     df.dropna(inplace=True)
     
     grouped = df.groupby([pd.cut(df.index, vrange)])

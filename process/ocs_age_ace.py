@@ -13,6 +13,7 @@ from matplotlib import gridspec
 import plotly.io as pio
 import plotly.express as px
 pio.renderers.default='browser'
+import constants as c
 
 dircInput1 = 'C:/Users/Chenxi/OneDrive/phd/age_and_fire/data/03_cleaned/07_ACE_FTS_with_AGEparams_cleaned/'
 dircInput2 = 'C:/Users/Chenxi/OneDrive/phd/age_and_fire/data/04_final/07_ACE_FTS_with_AGEparams_final/'
@@ -75,8 +76,7 @@ for species in species_list:
         #df.rename(columns = {'alt':'ALT'}, inplace = True)    
         df.set_index(v, inplace=True)   
         df.sort_index(inplace=True)
-        vmin, vmax, res = 0, 80 if v== 'AGE' else 100, 5
-        vrange = np.arange(vmin, vmax+res, res)
+        vrange = c.VRANGE_AGE if v== 'AGE' else c.VRANGE
         grouped = df.groupby([pd.cut(df.index, vrange)])
         for name, group in grouped:
             group.to_pickle(dircInput2+f'ACE_{species}_{v}_{name}_{tag}.pkl') #df.to_xarray().to_netcdf(dircInput2+f'MIPAS_OCS_{v}_{tag}.nc') 
