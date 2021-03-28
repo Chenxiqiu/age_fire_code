@@ -43,9 +43,11 @@ if species not in ['OCS', 'N2O']:
 
 vmin, vmax, res = c.VMIN, c.VMAX_AGE if target== 'AGE' else c.VMAX, c.VRES
 if species == 'OCS':
-    mrrange = c.OCSRANGE_MIPAS if ins_name == 'MIPAS' else c.OCSRANGE_ACE
+    mrmin, mrmax, mrres = c.OCSMIN_MIPAS if ins_name == 'MIPAS' else c.OCSMIN_ACE, c.OCSMAX, c.OCSRES
 if species == 'N2O':
-    mrrange = c.N2ORANGE_MIPAS if ins_name == 'MIPAS' else c.N2ORANGE_ACE
+    mrmin, mrmax, mrres = c.N2OMIN_MIPAS if ins_name == 'MIPAS' else c.N2OMIN_ACE, c.N2OMAX, c.N2ORES
+mrrange = np.arange(mrmin, mrmax+mrres, mrres)    
+    
 
 dircInput1 = 'C:/Users/Chenxi/OneDrive/phd/age_and_fire/data/04_final/09_ENVISAT_MIPAS_with_AGEparams_final/' \
 if ins_name == 'MIPAS' else 'C:/Users/Chenxi/OneDrive/phd/age_and_fire/data/04_final/07_ACE_FTS_with_AGEparams_final/'
