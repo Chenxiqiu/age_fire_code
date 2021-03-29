@@ -34,18 +34,20 @@ species = 'OCS' #OCS N2O
 target = 'MF_24'
 postfix = 'tagged' #DJF_LAT30Nplus_THETA430minus_PV2plus JJA_LAT30Sminus_THETA430minus_PV2plus
 
-if ins_name not in ['MIPAS', 'ACE']:
+if ins_name not in ('MIPAS', 'ACE'):
   raise Exception("instrument not recognized!")
-if target not in ['AGE', 'MF_03', 'MF_06', 'MF_12', 'MF_24', 'MF_48']:
+if target not in ('AGE', 'MF_03', 'MF_06', 'MF_12', 'MF_24', 'MF_48'):
   raise Exception("age variable not recognized!")
-if species not in ['OCS', 'N2O']:
+if species not in ('OCS', 'N2O'):
   raise Exception("species not recognized!")
 
 vmin, vmax, res = c.VMIN, c.VMAX_AGE if target== 'AGE' else c.VMAX, c.VRES
+
 if species == 'OCS':
     mrmin, mrmax, mrres = c.OCSMIN_MIPAS if ins_name == 'MIPAS' else c.OCSMIN_ACE, c.OCSMAX, c.OCSRES
 if species == 'N2O':
     mrmin, mrmax, mrres = c.N2OMIN_MIPAS if ins_name == 'MIPAS' else c.N2OMIN_ACE, c.N2OMAX, c.N2ORES
+
 mrrange = np.arange(mrmin, mrmax+mrres, mrres)    
     
 
@@ -119,4 +121,11 @@ cbar.set_label(f'% of count relative to the highest bin given {target}')
 
 plt.show()
 winsound.Beep(freq, duration)
+
+
+
+
+
+
+
 
