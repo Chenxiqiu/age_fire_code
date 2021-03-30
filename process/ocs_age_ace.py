@@ -42,7 +42,7 @@ for species in species_list:
     for v in v_list: 
         frame = []
         for fn in fn:
-            df = xr.open_dataset(f).to_dataframe().reset_index()
+            df = xr.open_dataset(fn).to_dataframe().reset_index()
             df = df[['LAT', 'LON', species, 'THETA', 'PV', v, 'time']]
             try:
                 df['AGE'] = df['AGE']*12
