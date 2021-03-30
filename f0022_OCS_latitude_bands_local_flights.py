@@ -21,13 +21,14 @@ def group(df):
     alt_range = np.arange(9, 14+0.5, 0.5) 
     lat_range = [-70, -60, -50, -35]
     output = df['OCS'].groupby([pd.cut(df['ALT'], alt_range), pd.cut(df['LAT'], lat_range)]).agg(['mean', 'std'])
-    print(output.head())
     return output
 
 df = southtrac.read(strat=1, local=1)
 plot_data_p1 = group(df[(df.index.month==9) | (df.index.month==10)])
 plot_data_p2 = group(df[(df.index.month==11)])
 plot_data_dif = plot_data_p1['mean'] - plot_data_p2['mean']
+
+
 
 def plotting(label=None, df=None, ax=None, shift=0, **kwargs):
     if ax is None:
@@ -36,9 +37,9 @@ def plotting(label=None, df=None, ax=None, shift=0, **kwargs):
                 y=[(x.left+x.right)/2+shift for x in group['mean'].index.get_level_values('ALT')],
                 xerr=df['std'],
                 capsize=4,
-                ecolor='#BDBDBD',
                 markeredgecolor='dimgrey',
                 label=str(key),
+                markersize=15,
                 **kwargs
                 )
     ax.grid()
@@ -60,7 +61,8 @@ for i, (key, group) in enumerate(grouped_p1):
         ax=ax1,
         shift=(i-1)/50,
         color=color_range[i],
-        fmt='-o'
+        ecolor=color_range[i],
+        fmt='-o',
         )
 ax1.legend()
 ax1.set(
@@ -94,6 +96,7 @@ for i, (key, group) in enumerate(grouped_dif):
         label=str(key),
         marker='s',
         markeredgecolor='dimgrey',
+        markersize=15
         )
 ax3.set_xlabel('difference in OCS / ppt')
 ax3.set_xlim(-100, 100)
