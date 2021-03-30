@@ -47,6 +47,9 @@ def plotting(label=None, df=None, ax=None, shift=0, **kwargs):
 color_range = ('dodgerblue', 'darkorange', 'forestgreen')
 
 fig = plt.figure(figsize=(10, 50))
+font = {'size': 15}
+plt.rc('font', **font)
+
 spec = gridspec.GridSpec(nrows=1, ncols=3, width_ratios=[1, 1, 0.5])#,height_ratios=[15,1]) width_ratios=[9,1]
 
 ax1 = fig.add_subplot(spec[0, 0])
@@ -90,7 +93,7 @@ for i, (key, group) in enumerate(grouped_dif):
         color=color_range[i],
         label=str(key),
         marker='s',
-        ecolor='#BDBDBD',
+        markeredgecolor='dimgrey',
         )
 ax3.set_xlabel('difference in OCS / ppt')
 ax3.set_xlim(-100, 100)
