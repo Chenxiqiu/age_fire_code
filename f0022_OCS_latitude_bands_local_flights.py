@@ -56,7 +56,7 @@ def plotting(label=None, df=None, ax=None, shift=0, **kwargs):
     ax.grid()
     return ax
 
-color_range = ('dodgerblue', 'forestgreen', 'darkorchid')
+color_range = ('dodgerblue', 'darkorange', 'forestgreen')
 
 fig = plt.figure(figsize=(10, 50))
 spec = gridspec.GridSpec(nrows=1, ncols=3, width_ratios=[1, 1, 0.5])#,height_ratios=[15,1]) width_ratios=[9,1]
