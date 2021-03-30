@@ -31,7 +31,7 @@ pio.renderers.default='browser'
 def group(df):
     df = df[['ALT', 'LAT', 'OCS']]
     alt_range = np.arange(9, 14+0.5, 0.5) 
-    lat_range = [-70, -60, -50, -35]#np.arange(-70, -35+10, 10) 
+    lat_range = [-70, -60, -50, -35]
     output = df['OCS'].groupby([pd.cut(df['ALT'], alt_range), pd.cut(df['LAT'], lat_range)]).describe() #apply(get_stats) .unstack()
     print(output.head())
     return output
