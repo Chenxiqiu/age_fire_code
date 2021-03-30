@@ -27,7 +27,7 @@ def group(df, groupby_v):
     output.loc[:, 'count'] = df[target].groupby(species).count()#apply(get_stats).unstack() #apply(get_stats) .unstack()
     output.loc[:, 'relative_count'] = output['count'] / np.nanmax(output['count'])
     output.index = output.index.astype('interval').rename(species)
-    return output, tag
+    return output
 
 ins_name = 'MIPAS' #MIPAS ACE
 species = 'OCS' #OCS N2O
@@ -52,8 +52,7 @@ mrrange = np.arange(mrmin, mrmax+mrres, mrres)
 dircInput1 = 'C:/Users/Chenxi/OneDrive/phd/age_and_fire/data/04_final/09_ENVISAT_MIPAS_with_AGEparams_final/' \
 if ins_name == 'MIPAS' else 'C:/Users/Chenxi/OneDrive/phd/age_and_fire/data/04_final/07_ACE_FTS_with_AGEparams_final/'
 
-for target in ('AGE', 'MF_03', 'MF_06', 'MF_12', 'MF_24', 'MF_48'):
-    vmin, vmax, res = c.VMIN, c.VMAX_AGE if target== 'AGE' else c.VMAX, c.VRES
+def plot_age():
     frame = []
     for i in range(vmin, vmax, res):
         df = pd.read_pickle(dircInput1 + f'{ins_name}_{species}_{target}_({i}, {i+res}]_{postfix}.pkl')
@@ -64,7 +63,7 @@ for target in ('AGE', 'MF_03', 'MF_06', 'MF_12', 'MF_24', 'MF_48'):
         df.drop(columns='air', inplace=True)
         
         if df.empty: break
-        ins_data, tag = group(df, groupby_v=target,)
+        ins_data = group(df, groupby_v=target,)
         ins_data.loc[:, target] = pd.Interval(i, i + res)
         ins_data.set_index(target, append=True, inplace=True)
     
@@ -121,7 +120,11 @@ for target in ('AGE', 'MF_03', 'MF_06', 'MF_12', 'MF_24', 'MF_48'):
     cbar=plt.colorbar(main, cax=ax3, orientation='horizontal')
     cbar.set_label(f'% of # relative to the highest bin given {target}') 
     
-    plt.show()
+    plt.show()    
+
+for target in ('AGE', 'MF_03', 'MF_06', 'MF_12', 'MF_24', 'MF_48'):
+    vmin, vmax, res = c.VMIN, c.VMAX_AGE if target== 'AGE' else c.VMAX, c.VRES
+    plot_age()
     
 winsound.Beep(freq, duration)
 
