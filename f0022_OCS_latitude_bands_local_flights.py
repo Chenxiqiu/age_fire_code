@@ -16,18 +16,6 @@ import plotly.io as pio
 import plotly.express as px
 pio.renderers.default='browser'
 
-# def get_stats(group):
-# #    return {'min': group.min(), 'max': group.max(), 'count': group.count(), 'mean': group.quantile(),'SD': group.std()}
-#     return {'count': group.count(), 
-#             'mean': group.mean(), 
-#             'median': group.quantile(),
-#             'SD': group.std(),
-#             'p10': group.quantile(0.1),
-#             'p25': group.quantile(0.25),
-#             'p75': group.quantile(0.75),
-#             'p90': group.quantile(0.9)}
-
-
 def group(df):
     df = df[['ALT', 'LAT', 'OCS']]
     alt_range = np.arange(9, 14+0.5, 0.5) 
@@ -101,7 +89,8 @@ for i, (key, group) in enumerate(grouped_dif):
         [(i.left+i.right)/2 for i in group.index.get_level_values('ALT')],
         color=color_range[i],
         label=str(key),
-        marker='s'
+        marker='s',
+        ecolor='#BDBDBD',
         )
 ax3.set_xlabel('difference in OCS / ppt')
 ax3.set_xlim(-100, 100)
