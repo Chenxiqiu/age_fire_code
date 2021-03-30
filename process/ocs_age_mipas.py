@@ -14,6 +14,9 @@ import plotly.io as pio
 import plotly.express as px
 pio.renderers.default='browser'
 import constants as c
+import winsound
+duration = 1000  # milliseconds
+freq = 440  # Hz
 
 dircInput1 = 'C:/Users/Chenxi/OneDrive/phd/age_and_fire/data/03_cleaned/09_ENVISAT_MIPAS_with_AGEparams_cleaned/'
 dircInput2 = 'C:/Users/Chenxi/OneDrive/phd/age_and_fire/data/04_final/09_ENVISAT_MIPAS_with_AGEparams_final/'
@@ -22,7 +25,7 @@ fn = glob2.glob(dircInput1+'*.nc')
 
 species = 'OCS'
 
-for v in ['AGE', 'MF_24', 'MF_03', 'MF_06', 'MF_12', 'MF_48']: 
+for v in ['AGE', 'MF_03', 'MF_06', 'MF_12', 'MF_24', 'MF_48']: 
     frame = []
     for f in fn:
         df = xr.open_dataset(f).to_dataframe().reset_index()
@@ -54,6 +57,7 @@ for v in ['AGE', 'MF_24', 'MF_03', 'MF_06', 'MF_12', 'MF_48']:
         except: 
             df = df[[species, v]].copy()
         df = df.astype(np.float16)
+        print(fn)
         frame.append(df)
     
     df = pd.concat(frame)            
@@ -65,4 +69,4 @@ for v in ['AGE', 'MF_24', 'MF_03', 'MF_06', 'MF_12', 'MF_48']:
     grouped = df.groupby([pd.cut(df.index, vrange)])
     for name, group in grouped:
         group.to_pickle(dircInput2+f'MIPAS_OCS_{v}_{name}_{tag}.pkl') #df.to_xarray().to_netcdf(dircInput2+f'MIPAS_OCS_{v}_{tag}.nc')
-        print(f'MIPAS_OCS_{v}_{name}_{tag}.pkl')
+        print(f'@{datetime.now().strftime("%H:%M:%S")}  MIPAS_OCS_{v}_{name}_{tag}.pkl')

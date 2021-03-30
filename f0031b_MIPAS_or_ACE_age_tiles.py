@@ -7,7 +7,7 @@ import glob2
 #import xarray as xr
 import pandas as pd
 import clean.clean_03 as southtrac
-import constants as c
+import process.constants as c
 from matplotlib import gridspec
 from datetime import datetime
 import winsound
@@ -29,7 +29,7 @@ def group(df, groupby_v):
     output.index = output.index.astype('interval').rename(species)
     return output, tag
 
-ins_name = 'ACE' #MIPAS ACE
+ins_name = 'MIPAS' #MIPAS ACE
 species = 'OCS' #OCS N2O
 postfix = 'tagged' #DJF_LAT30Nplus_THETA430minus_PV2plus JJA_LAT30Sminus_THETA430minus_PV2plus
 
@@ -122,7 +122,8 @@ for target in ('AGE', 'MF_03', 'MF_06', 'MF_12', 'MF_24', 'MF_48'):
     cbar.set_label(f'% of # relative to the highest bin given {target}') 
     
     plt.show()
-    winsound.Beep(freq, duration)
+    
+winsound.Beep(freq, duration)
 
 
 

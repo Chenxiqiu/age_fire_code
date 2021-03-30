@@ -14,6 +14,9 @@ import plotly.io as pio
 import plotly.express as px
 pio.renderers.default='browser'
 import constants as c
+import winsound
+duration = 1000  # milliseconds
+freq = 440  # Hz
 
 dircInput1 = 'C:/Users/Chenxi/OneDrive/phd/age_and_fire/data/03_cleaned/07_ACE_FTS_with_AGEparams_cleaned/'
 dircInput2 = 'C:/Users/Chenxi/OneDrive/phd/age_and_fire/data/04_final/07_ACE_FTS_with_AGEparams_final/'
@@ -80,4 +83,4 @@ for species in species_list:
         grouped = df.groupby([pd.cut(df.index, vrange)])
         for name, group in grouped:
             group.to_pickle(dircInput2+f'ACE_{species}_{v}_{name}_{tag}.pkl') #df.to_xarray().to_netcdf(dircInput2+f'MIPAS_OCS_{v}_{tag}.nc') 
- 
+            print(f'@{datetime.now().strftime("%H:%M:%S")}  ACE_OCS_{v}_{name}_{tag}.pkl')  
