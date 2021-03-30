@@ -32,7 +32,7 @@ def group(df):
     df = df[['ALT', 'LAT', 'OCS']]
     alt_range = np.arange(9, 14+0.5, 0.5) 
     lat_range = [-70, -60, -50, -35]
-    output = df['OCS'].groupby([pd.cut(df['ALT'], alt_range), pd.cut(df['LAT'], lat_range)]).describe() #apply(get_stats) .unstack()
+    output = df['OCS'].groupby([pd.cut(df['ALT'], alt_range), pd.cut(df['LAT'], lat_range)]).agg(['mean', 'std'])
     print(output.head())
     return output
 
@@ -57,7 +57,6 @@ def plotting(label=None, df=None, ax=None, shift=0, **kwargs):
     return ax
 
 color_range = ('dodgerblue', 'forestgreen', 'darkorchid')
-fmt = ('o', "v", "s")
 
 fig = plt.figure(figsize=(10, 50))
 spec = gridspec.GridSpec(nrows=1, ncols=3, width_ratios=[1, 1, 0.5])#,height_ratios=[15,1]) width_ratios=[9,1]
