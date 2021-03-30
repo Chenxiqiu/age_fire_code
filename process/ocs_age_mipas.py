@@ -21,14 +21,14 @@ freq = 440  # Hz
 dircInput1 = 'C:/Users/Chenxi/OneDrive/phd/age_and_fire/data/03_cleaned/09_ENVISAT_MIPAS_with_AGEparams_cleaned/'
 dircInput2 = 'C:/Users/Chenxi/OneDrive/phd/age_and_fire/data/04_final/09_ENVISAT_MIPAS_with_AGEparams_final/'
 
-fn = glob2.glob(dircInput1+'*.nc')
+fn = tuple(glob2.glob(dircInput1+'*.nc'))
 
 species = 'OCS'
 
-for v in ['AGE', 'MF_03', 'MF_06', 'MF_12', 'MF_24', 'MF_48']: 
+for v in ('AGE', 'MF_03', 'MF_06', 'MF_12', 'MF_24', 'MF_48'): 
     frame = []
-    for f in fn:
-        df = xr.open_dataset(f).to_dataframe().reset_index()
+    for fn in fn:
+        df = xr.open_dataset(fn).to_dataframe().reset_index()
         df = df[['LAT', species, 'THETA', 'PV', v, 'time']] 
         if v == 'AGE':
             df['AGE'] = df['AGE']*12
@@ -70,3 +70,5 @@ for v in ['AGE', 'MF_03', 'MF_06', 'MF_12', 'MF_24', 'MF_48']:
     for name, group in grouped:
         group.to_pickle(dircInput2+f'MIPAS_OCS_{v}_{name}_{tag}.pkl') #df.to_xarray().to_netcdf(dircInput2+f'MIPAS_OCS_{v}_{tag}.nc')
         print(f'@{datetime.now().strftime("%H:%M:%S")}  MIPAS_OCS_{v}_{name}_{tag}.pkl')
+
+winsound.Beep(freq, duration)
