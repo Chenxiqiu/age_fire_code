@@ -29,7 +29,7 @@ def group(df, groupby_v, vmin, vmax, res):
     df.drop(columns='air', inplace=True)
     tag = 'stratospheric'
     output = pd.DataFrame(columns=['count', 'mean', 'SD'])
-    output['count'] = df[species].groupby([pd.cut(df.index, vrange)]).count()#apply(get_stats).unstack() #apply(get_stats) .unstack()
+    output['count'] = df[species].groupby([pd.cut(df.index, vrange)]).count()
     output['mean'] = df[species].groupby([pd.cut(df.index, vrange)]).mean()
     output['std'] = df[species].groupby([pd.cut(df.index, vrange)]).std()
     output.reset_index(inplace=True)
