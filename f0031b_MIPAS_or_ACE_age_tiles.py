@@ -113,7 +113,7 @@ def plot_age():
     plot_data = ins_data['count'].unstack()
     x, y = plot_data.columns.left, plot_data.sum(0)
     ax2.barh(x, y, res, align='edge', color='powderblue')
-    ax2.set_xlabel(f'# for each {target} bin')
+    ax2.set_xlabel('#')
     ax2.axes.yaxis.set_visible(False)
     
     ax3 = fig.add_subplot(spec[1, 0])
