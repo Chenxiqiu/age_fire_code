@@ -20,7 +20,8 @@ def group(df):
     df = df[['ALT', 'LAT', 'OCS']]
     alt_range = np.arange(9, 14+0.5, 0.5) 
     lat_range = [-70, -60, -50, -40]
-    output = df['OCS'].groupby([pd.cut(df['ALT'], alt_range), pd.cut(df['LAT'], lat_range)]).agg(['mean', 'std'])
+    output = df['OCS'].groupby([pd.cut(df['ALT'], alt_range), pd.cut(df['LAT'], lat_range)]).agg(['count', 'mean', 'std'])
+    output = output[output['count']>=3]
     return output
 
 df = southtrac.read(strat=1, local=1)
@@ -31,11 +32,13 @@ plot_data_dif = plot_data_p1['mean'] - plot_data_p2['mean']
 index = [pd.Interval(-70, -60, closed='right'),
          pd.Interval(-60, -50, closed='right'),
          pd.Interval(-50, -40, closed='right'),]
+
 tro_hs_v = [
     dict(sep = 10.4, nov = 9.1), 
     dict(sep = 9.8, nov = 9.5), 
     dict(sep = 10.1, nov = 10.6), 
     ]
+
 trp_hs = dict(zip(index, tro_hs_v))
 
 def plotting(label=None, df=None, ax=None, shift=0, **kwargs):
