@@ -18,7 +18,7 @@ import plotly.io as pio
 import plotly.express as px
 pio.renderers.default='browser'
 
-ins_name = 'MIPAS' #MIPAS ACE AMICA
+ins_name = 'AMICA' #MIPAS ACE AMICA
 species = 'OCS' #OCS N2O
 postfix = 'tagged' #DJF_LAT30Nplus_THETA430minus_PV2plus JJA_LAT30Sminus_THETA430minus_PV2plus
 
@@ -72,7 +72,7 @@ def data2tiles_satellites():
 def data2tiles_southtrac():
         
     tag = 'stratospheric'
-    df = southtrac.read(strat=1).reset_index(target).sort_index()
+    df = southtrac.read(strat=1).set_index(target).sort_index()
     
     relative_count, total_count = group(df)
     return relative_count, total_count, tag
@@ -108,7 +108,7 @@ def plot_age():
     ax2.barh(x, y, res, align='edge', color='powderblue')
     ax2.set_xscale('log')
     ax2.set_xlabel('#')
-    ax2.set_xlim(0, 1e8)
+    ax2.set_xlim(1, 1e8)
     ax2.axes.yaxis.set_visible(False)
     
     ax3 = fig.add_subplot(spec[1, 0])
