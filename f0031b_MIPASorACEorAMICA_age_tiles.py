@@ -80,7 +80,7 @@ def data2tiles_southtrac():
 def plot_age():    
     camps = {'MIPAS' : 'YlGn',
               'ACE': 'OrRd',
-              'SOUTHTRAC': ' '
+              'SOUTHTRAC': 'BuPu'
               }
     
     fig = plt.figure(figsize=(10, 50))
