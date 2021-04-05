@@ -80,7 +80,7 @@ def data2tiles_southtrac():
 def plot_age():    
     camps = {'MIPAS' : 'YlGn',
               'ACE': 'OrRd',
-              'SOUTHTRAC': 'BuPu'
+              'AMICA': 'BuPu'
               }
     
     fig = plt.figure(figsize=(10, 50))
@@ -89,8 +89,8 @@ def plot_age():
     spec = gridspec.GridSpec(nrows=2, ncols=2,height_ratios=[15, 1],width_ratios=[9, 1])#,height_ratios=[15,1]) width_ratios=[9,1]
     
     ax1 = fig.add_subplot(spec[0, 0])
-    x = np.unique([i.left for i in relative_count.columns] + [i.right for i in relative_count.columns])
-    y = np.unique([i.left for i in relative_count.index] + [i.right for i in relative_count.index])            
+    x = [i.left for i in relative_count.columns] + [i.right for i in relative_count.columns][-1]
+    y = [i.left for i in relative_count.index] + [i.right for i in relative_count.index][-1]          
     x, y = np.meshgrid(x, y)
     main = ax1.pcolor (x, y, relative_count, cmap=camps[ins_name])
     
