@@ -92,7 +92,7 @@ def plot_age():
     x = [i.left for i in relative_count.columns] + [i.right for i in relative_count.columns][-1]
     y = [i.left for i in relative_count.index] + [i.right for i in relative_count.index][-1]          
     x, y = np.meshgrid(x, y)
-    main = ax1.pcolor (x, y, relative_count, cmap=camps[ins_name])
+    main = ax1.pcolormesh (x, y, relative_count, cmap=camps[ins_name], shading='flat')
     
     ax1.set(
             xlim=(mrmin, mrmax),
