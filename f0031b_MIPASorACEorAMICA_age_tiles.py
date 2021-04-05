@@ -51,7 +51,7 @@ def group(df):
 def data2tiles_satellites():
     frame_relative_count = []
     frame_total_count = []
-    for i in range(vmin, vmax, res):
+    for i in vrange[:-1]:
         df = pd.read_pickle(dircInput1 + f'{ins_name}_{species}_{target}_({i}, {i+res}]_{postfix}.pkl')
         df.dropna(inplace=True)
         
@@ -89,12 +89,10 @@ def plot_age():
     spec = gridspec.GridSpec(nrows=2, ncols=2,height_ratios=[15, 1],width_ratios=[9, 1])#,height_ratios=[15,1]) width_ratios=[9,1]
     
     ax1 = fig.add_subplot(spec[0, 0])
-    plot_data = relative_count['relative_count'].unstack()
-    x = plot_data.index.left.union(plot_data.index.right)
-    y = plot_data.columns.left.union(plot_data.columns.right)             
-    y, x = np.meshgrid(y, x)
-    z = plot_data
-    main = ax1.pcolor (x, y, z, cmap=camps[ins_name])
+    x = np.unique([i.left for i in relative_count.columns] + [i.right for i in relative_count.columns])
+    y = np.unique([i.left for i in relative_count.index] + [i.right for i in relative_count.index])            
+    x, y = np.meshgrid(x, y)
+    main = ax1.pcolor (x, y, relative_count, cmap=camps[ins_name])
     
     ax1.set(
             xlim=(mrmin, mrmax),
@@ -105,8 +103,8 @@ def plot_age():
     plt.title(f'{ins_name}_{tag}')
     
     ax2 = fig.add_subplot(spec[0, 1], sharey=ax1)
-    plot_data = relative_count['count'].unstack()
-    x, y = plot_data.columns.left, plot_data.sum(0)
+    x = [i.left for i in total_count.index]
+    y = total_count.values
     ax2.barh(x, y, res, align='edge', color='powderblue')
     ax2.set_xscale('log')
     ax2.set_xlabel('#')
