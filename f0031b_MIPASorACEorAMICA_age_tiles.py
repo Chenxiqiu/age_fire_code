@@ -48,8 +48,27 @@ def group(df):
     relative_count = count.div(total_count, axis=0)
     return relative_count, total_count
 
-
-
+def data2tiles_satellites():
+    frame_relative_count = []
+    frame_total_count = []
+    for i in range(vmin, vmax, res):
+        df = pd.read_pickle(dircInput1 + f'{ins_name}_{species}_{target}_({i}, {i+res}]_{postfix}.pkl')
+        df.dropna(inplace=True)
+        
+        tag = 'stratospheric'
+        df = df.loc[df['air']>=1].copy()
+        
+        if df.empty: 
+            print(f'{target}: ({i}, {i+res}] is empty')
+            break
+        relative_count, total_count = group(df)
+        frame_relative_count.append(relative_count)
+        frame_total_count.append(total_count)
+        print(f'@{datetime.now().strftime("%H:%M:%S")}   {target}: ({i}, {i+res}]')
+    relative_count = pd.concat(frame_relative_count)
+    total_count = pd.concat(frame_total_count)
+    return relative_count, total_count, tag
+    
 def data2tiles_southtrac():
         
     tag = 'stratospheric'
