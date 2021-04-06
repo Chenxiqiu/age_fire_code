@@ -83,6 +83,11 @@ def plot_age():
         'ACE': 'OrRd',
         'AMICA': 'BuPu'
         }
+    barcolors = {
+        'MIPAS' : 'khaki',
+        'ACE': 'darksalmon',
+        'AMICA': 'powderblue'
+        }
     
     fig = plt.figure(figsize=(10, 50))
     font = {'size': 15}
@@ -106,7 +111,7 @@ def plot_age():
     ax2 = fig.add_subplot(spec[0, 1], sharey=ax1)
     x = [i.left for i in total_count.index]
     y = total_count.values
-    ax2.barh(x, y, res, align='edge', color='powderblue')
+    ax2.barh(x, y, res, align='edge', color=barcolors[ins_name])
     ax2.set_xscale('log')
     ax2.set_xlabel('#')
     ax2.set_xlim(1, 1e3 if ins_name=='AMICA' else 1e8)
