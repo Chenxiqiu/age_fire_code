@@ -18,10 +18,10 @@ import plotly.io as pio
 import plotly.express as px
 pio.renderers.default='browser'
 
-ins_name = 'AMICA' #MIPAS ACE AMICA
-species = 'OCS' #OCS N2O
+ins_name = input('instrument name:\n').upper() #MIPAS ACE AMICA
+species = input('attmospheric species:\n').upper() #OCS N2O
 postfix = 'tagged' #DJF_LAT30Nplus_THETA430minus_PV2plus JJA_LAT30Sminus_THETA430minus_PV2plus
-
+print(f'postfix: {postfix}')
 
 if ins_name not in ('MIPAS', 'ACE', 'AMICA'):
   raise Exception("instrument not recognized!")
