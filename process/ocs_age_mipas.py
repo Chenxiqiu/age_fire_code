@@ -25,7 +25,7 @@ fn = tuple(glob2.glob(dircInput1+'*.nc'))
 
 species = 'OCS'
 
-for v in ('AGE', 'MF_03', 'MF_06', 'MF_12', 'MF_24', 'MF_48'): 
+for v in c.ALL_AGEV: 
     frame = []
     for fn in fn:
         df = xr.open_dataset(fn).to_dataframe().reset_index()

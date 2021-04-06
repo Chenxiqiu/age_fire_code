@@ -24,7 +24,6 @@ dircInput2 = 'C:/Users/Chenxi/OneDrive/phd/age_and_fire/data/04_final/07_ACE_FTS
 fn = tuple(glob2.glob(dircInput1+'*.nc'))
 
 species_list = ('OCS', 'N2O')
-v_list = ('AGE', 'MF_03', 'MF_06', 'MF_12', 'MF_24', 'MF_48')
 
 # tag = {
 #        'DJF_LAT30Nplus_THETA430minus_PV2plus': lambda df: ((df.time.dt.month == 12) | (df.time.dt.month == 1) | (df.time.dt.month == 2))
@@ -39,7 +38,7 @@ vmax = 100
 res = 5
 
 for species in species_list:
-    for v in v_list: 
+    for v in c.ALL_AGEV: 
         frame = []
         for fn in fn:
             df = xr.open_dataset(fn).to_dataframe().reset_index()
