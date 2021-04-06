@@ -78,10 +78,11 @@ def data2tiles_southtrac():
     return relative_count, total_count, tag
     
 def plot_age():    
-    camps = {'MIPAS' : 'YlGn',
-              'ACE': 'OrRd',
-              'AMICA': 'BuPu'
-              }
+    camps = {
+        'MIPAS' : 'YlGn',
+        'ACE': 'OrRd',
+        'AMICA': 'BuPu'
+        }
     
     fig = plt.figure(figsize=(10, 50))
     font = {'size': 15}
@@ -89,8 +90,8 @@ def plot_age():
     spec = gridspec.GridSpec(nrows=2, ncols=2,height_ratios=[15, 1],width_ratios=[9, 1])#,height_ratios=[15,1]) width_ratios=[9,1]
     
     ax1 = fig.add_subplot(spec[0, 0])
-    x = [i.left for i in relative_count.columns] + [i.right for i in relative_count.columns][-1]
-    y = [i.left for i in relative_count.index] + [i.right for i in relative_count.index][-1]          
+    x = np.append([i.left for i in relative_count.columns], relative_count.columns[-1].right)
+    y = np.append([i.left for i in relative_count.index], relative_count.index[-1].right)
     x, y = np.meshgrid(x, y)
     main = ax1.pcolormesh (x, y, relative_count, cmap=camps[ins_name], shading='flat')
     
@@ -108,7 +109,7 @@ def plot_age():
     ax2.barh(x, y, res, align='edge', color='powderblue')
     ax2.set_xscale('log')
     ax2.set_xlabel('#')
-    ax2.set_xlim(1, 1e8)
+    ax2.set_xlim(1, 1e3 if ins_name=='AMICA' else 1e8)
     ax2.axes.yaxis.set_visible(False)
     
     ax3 = fig.add_subplot(spec[1, 0])
