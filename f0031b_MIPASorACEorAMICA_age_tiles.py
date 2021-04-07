@@ -85,7 +85,7 @@ def plot_age():
         }
     barcolors = {
         'MIPAS' : 'khaki',
-        'ACE': 'darksalmon',
+        'ACE': 'sandybrown',
         'AMICA': 'powderblue'
         }
     
