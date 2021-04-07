@@ -1,10 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt 
-from matplotlib import rcParams, cycler
 import matplotlib.cm as cm
-from mpl_toolkits.axes_grid1 import make_axes_locatable
-import glob2
-#import xarray as xr
 import pandas as pd
 import clean.clean_03 as southtrac
 import process.constants as c
@@ -13,7 +9,6 @@ from datetime import datetime
 import winsound
 duration = 1000  # milliseconds
 freq = 440  # Hz
-#from varname import nameof
 import plotly.io as pio
 import plotly.express as px
 pio.renderers.default='browser'
