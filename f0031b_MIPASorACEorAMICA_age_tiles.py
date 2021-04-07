@@ -20,6 +20,7 @@ pio.renderers.default='browser'
 
 ins_name = input('instrument name:\n').upper() #MIPAS ACE AMICA
 species = input('attmospheric species:\n').upper() #OCS N2O
+target_button = input('all parameters(leave empty) or specific parameter (type name)\n').upper()
 postfix = 'tagged' #DJF_LAT30Nplus_THETA430minus_PV2plus JJA_LAT30Sminus_THETA430minus_PV2plus
 print(f'postfix: {postfix}')
 
@@ -123,7 +124,14 @@ def plot_age():
     
     plt.show()    
 
-for target in c.ALL_AGEV_SOUTHTRAC if ins_name == 'AMICA' else c.ALL_AGEV:
+if target_button != '':
+    target = target_button
+    vrange = c.VRANGE_AGE if target == 'AGE' else c.VRANGE
+    vmin, vmax, res = c.VMIN, c.VMAX_AGE if target== 'AGE' else c.VMAX, c.VRES
+    relative_count, total_count, tag = data2tiles_southtrac() if  ins_name == 'AMICA' else data2tiles_satellites()
+    plot_age()    
+else:
+    for target in c.ALL_AGEV_SOUTHTRAC if ins_name == 'AMICA' else c.ALL_AGEV:
         vrange = c.VRANGE_AGE if target == 'AGE' else c.VRANGE
         vmin, vmax, res = c.VMIN, c.VMAX_AGE if target== 'AGE' else c.VMAX, c.VRES
         relative_count, total_count, tag = data2tiles_southtrac() if  ins_name == 'AMICA' else data2tiles_satellites()
