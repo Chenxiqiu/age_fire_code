@@ -8,7 +8,7 @@ VRES = 5 #the size of the bins for age variables
 VRANGE = np.arange(VMIN, VMAX+VRES, VRES)
 VRANGE_AGE = np.arange(VMIN, VMAX_AGE+VRES, VRES)
 ALL_AGEV = ('AGE', 'MF_03', 'MF_06', 'MF_12', 'MF_24', 'MF_48')
-ALL_AGEV_SOUTHTRAC = ('P50', 'MF_06', 'MF_24', 'AGE')
+ALL_AGEV_SOUTHTRAC = ('P50', 'AGE','MF_06', 'MF_24', 'AGE')
 
 #OCS
 OCSMIN_MIPAS = -200
