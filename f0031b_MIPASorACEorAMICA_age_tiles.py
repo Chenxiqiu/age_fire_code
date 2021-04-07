@@ -18,16 +18,24 @@ import plotly.io as pio
 import plotly.express as px
 pio.renderers.default='browser'
 
-ins_name = input('instrument name:\n').upper() #MIPAS ACE AMICA
-species = input('attmospheric species:\n').upper() #OCS N2O
-target_button = input('all parameters(leave empty) or specific parameter (type name)\n').upper()
-postfix = 'tagged' #DJF_LAT30Nplus_THETA430minus_PV2plus JJA_LAT30Sminus_THETA430minus_PV2plus
-print(f'postfix: {postfix}')
+def input_func(descrpt, psblt):
+    while True:
+        parameter = input(descrpt+':\n').upper()
+        if parameter in psblt:
+            break
+        else:
+            print(f'\nSorry, but {parameter} doesn\'t exist :O')
+    return parameter
 
-if ins_name not in ('MIPAS', 'ACE', 'AMICA'):
-  raise Exception("instrument not recognized!")
-if species not in ('OCS', 'N2O'):
-  raise Exception("species not recognized!")
+ins_name = input_func('instrument name', ('MIPAS', 'ACE', 'AMICA'))
+species = input_func('atmospheric species', ('OCS', 'N2O'))
+target_button = input_func(
+    'all parameters(leave empty) or specific parameter (type name)', 
+    ('',)+c.ALL_AGEV_SOUTHTRAC+c.ALL_AGEV
+    )
+                           
+postfix = 'tagged' #DJF_LAT30Nplus_THETA430minus_PV2plus JJA_LAT30Sminus_THETA430minus_PV2plus
+print(f'\npostfix: {postfix}')
 
 if species == 'OCS':
     mrmin, mrmax, mrres = c.OCSMIN_MIPAS if ins_name == 'MIPAS' else c.OCSMIN_ACE, c.OCSMAX, c.OCSRES
@@ -84,11 +92,9 @@ def plot_age():
         'ACE': 'OrRd',
         'AMICA': 'BuPu'
         }
-    barcolors = {
-        'MIPAS' : 'khaki',
-        'ACE': 'sandybrown',
-        'AMICA': 'powderblue'
-        }
+
+    cmap = cm.get_cmap(camps[ins_name])
+    barcolor = cmap(0.1)
     
     fig = plt.figure(figsize=(10, 50))
     font = {'size': 15}
@@ -99,7 +105,7 @@ def plot_age():
     x = np.append([i.left for i in relative_count.columns], relative_count.columns[-1].right)
     y = np.append([i.left for i in relative_count.index], relative_count.index[-1].right)
     x, y = np.meshgrid(x, y)
-    main = ax1.pcolormesh (x, y, relative_count, cmap=camps[ins_name], shading='flat')
+    main = ax1.pcolormesh (x, y, relative_count, cmap=cmap, shading='flat')
     
     ax1.set(
             xlim=(mrmin, mrmax),
@@ -112,7 +118,7 @@ def plot_age():
     ax2 = fig.add_subplot(spec[0, 1], sharey=ax1)
     x = [i.left for i in total_count.index]
     y = total_count.values
-    ax2.barh(x, y, res, align='edge', color=barcolors[ins_name])
+    ax2.barh(x, y, res, align='edge', color=barcolor)
     ax2.set_xscale('log')
     ax2.set_xlabel('#')
     ax2.set_xlim(1, 1e3 if ins_name=='AMICA' else 1e8)
@@ -121,9 +127,7 @@ def plot_age():
     ax3 = fig.add_subplot(spec[1, 0])
     cbar=plt.colorbar(main, cax=ax3, orientation='horizontal')
     cbar.set_label(f'% of # relative to the highest bin given {target}') 
-    
-    plt.show()    
-
+  
 if target_button != '':
     target = target_button
     vrange = c.VRANGE_AGE if target == 'AGE' else c.VRANGE
