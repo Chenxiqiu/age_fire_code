@@ -41,7 +41,8 @@ def group(df):
     df = df.copy()
     df.index = pd.cut(df.index, vrange)
     df.rename_axis(target, inplace=True)
-    return {'mean': df['OCS'].mean(0), 'std': df['OCS'].std(0), 'count': df['OCS'].count()}
+    df = df.astype(np.float32)
+    return {'mean':df['OCS'].mean(), 'std': df[species].std(), 'count': df[species].count()}
 
 def data2plot(ins_name):
     frame = []
@@ -61,31 +62,37 @@ def data2plot(ins_name):
 
 def plot_age():
     
-    colors = {'MIPAS' : 'firebrick',
-              'ACE': 'orangered',
-              'AMICA': 'teal'
+    colors = {'MIPAS' : 'forestgreen',
+              'ACE': 'red',
+              'AMICA': 'darkorchid'
               }    
     
-    def plot(label=None, df=None, ax=None, shift=None, **kwargs):
+    def plot(label=None, df=None, ax=None, **kwargs):
         if ax is None:
             ax = plt.gca()   
-        ax.errorbar(x=df['mean'], 
-                    y=df.index.mid+shift, 
-                    xerr=df['std'],
-                    capsize=3,
-                    fmt='o', 
-                    label=label,
-                    color=colors[label],
-                    **kwargs
-                    )
+        ax.fill_betweenx(y=df.index.mid,
+                         x1=df['mean']-df['std'], 
+                         x2=df['mean']+df['std'],
+                         label=label,
+                         color=colors[label],
+                         alpha=0.5)
+        # ax.errorbar(x=df['mean'], 
+        #             y=df.index.mid+shift, 
+        #             xerr=df['std'],
+        #             capsize=3,
+        #             fmt='o', 
+        #             label=label,
+        #             color=colors[label],
+        #             **kwargs
+                    # )
         return ax
     
     fig = plt.figure(figsize=(10,50))
     ax1 = fig.add_subplot()
     
-    plot(label='ACE', df=stats_ace, shift=-0.1)
-    plot(label='AMICA', df=stats_amica, shift=0)
-    plot(label='MIPAS', df=stats_mipas, shift=0.1)
+    plot(label='AMICA', df=stats_amica)
+    plot(label='MIPAS', df=stats_mipas)
+    plot(label='ACE', df=stats_ace)
     
     ax1.set(
             xlim=(0, 600) if species == 'OCS' else (0, 350),
