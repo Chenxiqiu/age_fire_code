@@ -88,6 +88,8 @@ def plot_age():
         return ax
     
     fig = plt.figure(figsize=(10,50))
+    font = {'size': 15}
+    plt.rc('font', **font)
     ax1 = fig.add_subplot()
     
     plot(label='AMICA', df=stats_amica)
