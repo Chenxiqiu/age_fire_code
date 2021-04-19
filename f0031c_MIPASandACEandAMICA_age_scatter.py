@@ -98,8 +98,8 @@ def plot_age():
     
     ax1.set_xlim((0, 600) if species == 'OCS' else (0, 350))
     ax1.set_ylim((vmin,vmax))
-    ax1.set_xlabel('OCS / ppt' if species == 'OCS' else 'N2O / ppb', fontweight='bold')
-    ax1.set_ylabel(target, fontweight='bold')
+    ax1.set_xlabel('OCS [ppt]' if species == 'OCS' else 'N2O [ppb]', fontweight='bold')
+    ax1.set_ylabel(f'{target} [month]' if target in ['AGE', 'p50'] else f'{target} [%]', fontweight='bold')
     plt.legend()
     #plt.title(f'{tag}')
     plt.show()
