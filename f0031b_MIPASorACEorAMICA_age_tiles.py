@@ -107,7 +107,7 @@ def plot_age():
             ylim=(vmin,vmax),
             )
     ax1.set_xlabel('OCS [ppt]' if species == 'OCS' else 'N2O [ppb]', fontweight='bold')
-    ax1.set_ylabel(f'{target} [month]' if target in ['AGE', 'p50'] else f'{target} [%]', fontweight='bold')
+    ax1.set_ylabel(f'{target} [month]' if target in ('AGE', 'p50') else f'{target} [%]', fontweight='bold')
     plt.title(f'{ins_name}_{tag}')
     
     ax2 = fig.add_subplot(spec[0, 1], sharey=ax1)
