@@ -92,7 +92,7 @@ def plot_age():
     barcolor = cmap(0.1)
     
     fig = plt.figure(figsize=(10, 50))
-    font = {'size': 15}
+    font = {'size': 18}
     plt.rc('font', **font)
     spec = gridspec.GridSpec(nrows=2, ncols=2,height_ratios=[15, 1],width_ratios=[9, 1])#,height_ratios=[15,1]) width_ratios=[9,1]
     
