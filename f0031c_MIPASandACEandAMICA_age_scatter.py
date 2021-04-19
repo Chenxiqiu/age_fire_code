@@ -88,7 +88,7 @@ def plot_age():
         return ax
     
     fig = plt.figure(figsize=(10,50))
-    font = {'size': 15}
+    font = {'size': 18}
     plt.rc('font', **font)
     ax1 = fig.add_subplot()
     
@@ -96,14 +96,12 @@ def plot_age():
     plot(label='MIPAS', df=stats_mipas)
     plot(label='ACE', df=stats_ace)
     
-    ax1.set(
-            xlim=(0, 600) if species == 'OCS' else (0, 350),
-            ylim=(vmin,vmax),
-            )
-    ax1.set_xlabel('OCS / ppt' if species == 'OCS' else 'N2O / ppb')
-    ax1.set_ylabel(target)
+    ax1.set_xlim((0, 600) if species == 'OCS' else (0, 350))
+    ax1.set_ylim((vmin,vmax))
+    ax1.set_xlabel('OCS / ppt' if species == 'OCS' else 'N2O / ppb', fontweight='bold')
+    ax1.set_ylabel(target, fontweight='bold')
     plt.legend()
-    plt.title(f'{tag}')
+    #plt.title(f'{tag}')
     plt.show()
 
 ##########plotting##########
